@@ -1,0 +1,50 @@
+clc;
+close all;
+clear all;
+run_function;
+warning off;
+
+[fn fp]=uigetfile({'*.jpg;*.jpeg;*.bmp;*.png','All video Files';...
+          '*.*','All Files' },'mytitle',...
+          'C:\Work\Twin_A');
+QueryImageName=[fp fn];
+
+I =imresize(imread(QueryImageName),[301 445]);
+
+%% enhancement
+[shapSkeleton1 thermalimage1 Ioo1 U1 out1]=enhancement(I);
+             
+%% proposed
+[shapSkeleton2 thermalimage2 Ioo2 U2 out2]=proposed(I);
+%% result
+if out1==1
+    if out2==1
+    figure(1),
+    subplot(1,3,1);imshow(thermalimage1);title('thermal Image')
+    subplot(1,3,2);imshow(Ioo1),title('ENHANCEMENT')
+    subplot(1,3,3);imshow(U1);title('database Image'); 
+else
+    figure(1),
+    subplot(1,3,1);imshow(thermalimage1);title('thermal Image')
+    subplot(1,3,2);imshow(Ioo1)  
+    subplot(1,3,3);imshow(U1);title('database Image'); 
+    
+    figure(2),
+    subplot(1,3,1);imshow(thermalimage2);title('thermal Image')
+    subplot(1,3,2);imshow(Ioo2)  
+    subplot(1,3,3);imshow(U2);title('database Image')  
+    end
+else
+    figure(1),
+    subplot(1,3,1);imshow(thermalimage1);title('thermal Image')
+    subplot(1,3,2);imshow(Ioo1)  
+    subplot(1,3,3);imshow(U1);title('database Image'); 
+    
+    figure(2),
+    subplot(1,3,1);imshow(thermalimage2);title('thermal Image')
+    subplot(1,3,2);imshow(Ioo2)  
+    subplot(1,3,3);imshow(U2);title('database Image') 
+end
+
+   
+    
